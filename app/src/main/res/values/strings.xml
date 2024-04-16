@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">ComposeNewsClient</string>
+    <string name="loren_ipsum">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</string>
+    <string name="navigation_item_main">Home</string>
+    <string name="navigation_item_favourite">Favourite</string>
+    <string name="navigation_item_profile">Profile</string>
+</resources>
