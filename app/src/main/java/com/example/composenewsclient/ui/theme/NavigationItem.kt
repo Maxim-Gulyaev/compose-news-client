@@ -6,23 +6,29 @@ import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.example.composenewsclient.R
+import com.example.composenewsclient.navigation.Screen
 
 sealed class NavigationItem(
+    val screen: Screen,
     val titleResId: Int,
     val icon: ImageVector
 ) {
-    object Home: NavigationItem(
+
+    object Home : NavigationItem(
+        screen = Screen.NewsFeed,
         titleResId = R.string.navigation_item_main,
-        Icons.Outlined.Home
+        icon = Icons.Outlined.Home
     )
 
-    object Favourite: NavigationItem(
+    object Favourite : NavigationItem(
+        screen = Screen.Favourite,
         titleResId = R.string.navigation_item_favourite,
-        Icons.Outlined.Favorite
+        icon = Icons.Outlined.Favorite
     )
 
-    object Profile: NavigationItem(
+    object Profile : NavigationItem(
+        screen = Screen.Profile,
         titleResId = R.string.navigation_item_profile,
-        Icons.Outlined.Person
+        icon = Icons.Outlined.Person
     )
 }
