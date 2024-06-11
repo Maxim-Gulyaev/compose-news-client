@@ -15,6 +15,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.composenewsclient.MainViewModel
+import com.example.composenewsclient.domain.PostComment
 
 @OptIn(ExperimentalFoundationApi::class,
     ExperimentalMaterial3Api::class
@@ -26,7 +27,16 @@ fun HomeScreen(
 ) {
     val feedPosts = viewModel.feedPosts.observeAsState(listOf())
 
-    LazyColumn(
+    if (feedPosts.value.isNotEmpty()) {
+        val comments = mutableListOf<PostComment>().apply {
+            repeat(20) {
+                add(PostComment(id = it))
+            }
+        }
+        CommentsScreen(feedPost = feedPosts.value.get(0), comments = comments)
+    }
+
+    /*LazyColumn(
         modifier = Modifier.padding(paddingValues),
         contentPadding = PaddingValues(
             top = 16.dp,
@@ -69,5 +79,5 @@ fun HomeScreen(
                 }
             )
         }
-    }
+    }*/
 }
