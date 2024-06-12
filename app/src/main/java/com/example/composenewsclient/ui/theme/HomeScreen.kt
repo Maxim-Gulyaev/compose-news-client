@@ -1,5 +1,6 @@
 package com.example.composenewsclient.ui.theme
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -15,9 +16,10 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.composenewsclient.MainViewModel
-import com.example.composenewsclient.domain.PostComment
+import com.example.composenewsclient.domain.FeedPost
 
-@OptIn(ExperimentalFoundationApi::class,
+@OptIn(
+    ExperimentalFoundationApi::class,
     ExperimentalMaterial3Api::class
 )
 @Composable
@@ -25,18 +27,38 @@ fun HomeScreen(
     viewModel: MainViewModel,
     paddingValues: PaddingValues,
 ) {
-    val feedPosts = viewModel.feedPosts.observeAsState(listOf())
+    val screenState = viewModel.screenState.observeAsState(HomeScreenState.Initial)
 
-    if (feedPosts.value.isNotEmpty()) {
-        val comments = mutableListOf<PostComment>().apply {
-            repeat(20) {
-                add(PostComment(id = it))
+    when (val currentState = screenState.value) {
+        is HomeScreenState.Posts -> {
+            FeedPosts(
+                posts = currentState.posts,
+                viewModel = viewModel,
+                paddingValues = paddingValues
+            )
+        }
+        is HomeScreenState.Comments -> {
+            CommentsScreen(
+                feedPost = currentState.feedPost,
+                comments = currentState.comments,
+                onBackPressed = { viewModel.closeComments() }
+            )
+            BackHandler {
+                viewModel.closeComments()
             }
         }
-        CommentsScreen(feedPost = feedPosts.value.get(0), comments = comments)
+        HomeScreenState.Initial -> {}
     }
+}
 
-    /*LazyColumn(
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
+@Composable
+private fun FeedPosts(
+    posts: List<FeedPost>,
+    viewModel: MainViewModel,
+    paddingValues: PaddingValues,
+) {
+    LazyColumn(
         modifier = Modifier.padding(paddingValues),
         contentPadding = PaddingValues(
             top = 16.dp,
@@ -47,7 +69,7 @@ fun HomeScreen(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         items(
-            items = feedPosts.value,
+            items = posts,
             key = { it.id }
         ) { feedPost ->
             val dismissState = rememberDismissState()
@@ -69,8 +91,8 @@ fun HomeScreen(
                         onShareClickListener = { statisticItem ->
                             viewModel.updateCount(feedPost, statisticItem)
                         },
-                        onCommentClickListener = { statisticItem ->
-                            viewModel.updateCount(feedPost, statisticItem)
+                        onCommentClickListener = {
+                            viewModel.showComments(feedPost)
                         },
                         onLikeClickListener = { statisticItem ->
                             viewModel.updateCount(feedPost, statisticItem)
@@ -79,5 +101,5 @@ fun HomeScreen(
                 }
             )
         }
-    }*/
+    }
 }
