@@ -7,13 +7,15 @@ import com.example.composenewsclient.domain.FeedPost
 import com.example.composenewsclient.domain.PostComment
 import com.example.composenewsclient.ui.theme.CommentsScreenState
 
-class CommentsViewModel: ViewModel() {
+class CommentsViewModel(
+    feedPost: FeedPost
+): ViewModel() {
 
     private val _screenState = MutableLiveData<CommentsScreenState>(CommentsScreenState.Initial)
     val screenState: LiveData<CommentsScreenState> = _screenState
 
     init {
-        loadComments(FeedPost())
+        loadComments(feedPost)
     }
 
     fun loadComments(
