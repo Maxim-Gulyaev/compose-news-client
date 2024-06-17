@@ -127,7 +127,7 @@ private fun CommentItem(
 @Preview
 @Composable
 private fun PreviewComment() {
-    ComposeNewsClientTheme {
+    VkNewsClientTheme {
         CommentItem(comment = PostComment(id = 0))
     }
 }
