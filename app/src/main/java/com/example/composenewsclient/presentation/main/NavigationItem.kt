@@ -1,4 +1,4 @@
-package com.example.composenewsclient.ui.theme
+package com.example.composenewsclient.presentation.main
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Favorite

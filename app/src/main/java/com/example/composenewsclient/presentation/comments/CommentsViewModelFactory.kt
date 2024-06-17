@@ -1,4 +1,4 @@
-package com.example.composenewsclient
+package com.example.composenewsclient.presentation.comments
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

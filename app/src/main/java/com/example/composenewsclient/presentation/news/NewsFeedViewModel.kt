@@ -1,12 +1,11 @@
-package com.example.composenewsclient
+package com.example.composenewsclient.presentation.news
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.composenewsclient.domain.FeedPost
 import com.example.composenewsclient.domain.StatisticItem
-import com.example.composenewsclient.ui.theme.NewsFeedScreenState
-import com.example.composenewsclient.ui.theme.NavigationItem
+import com.example.composenewsclient.presentation.main.NavigationItem
 
 class NewsFeedViewModel: ViewModel() {
 

@@ -1,4 +1,4 @@
-package com.example.composenewsclient.ui.theme
+package com.example.composenewsclient.samples
 
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult

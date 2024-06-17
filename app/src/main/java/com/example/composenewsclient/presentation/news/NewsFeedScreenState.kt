@@ -1,4 +1,4 @@
-package com.example.composenewsclient.ui.theme
+package com.example.composenewsclient.presentation.news
 
 import com.example.composenewsclient.domain.FeedPost
 

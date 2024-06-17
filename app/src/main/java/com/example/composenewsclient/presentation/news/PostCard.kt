@@ -1,4 +1,4 @@
-package com.example.composenewsclient.ui.theme
+package com.example.composenewsclient.presentation.news
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable

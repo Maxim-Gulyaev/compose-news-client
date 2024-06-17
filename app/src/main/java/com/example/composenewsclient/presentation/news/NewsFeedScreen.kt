@@ -1,6 +1,5 @@
-package com.example.composenewsclient.ui.theme
+package com.example.composenewsclient.presentation.news
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -16,15 +15,10 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.composenewsclient.NewsFeedViewModel
 import com.example.composenewsclient.domain.FeedPost
 
-@OptIn(
-    ExperimentalFoundationApi::class,
-    ExperimentalMaterial3Api::class
-)
 @Composable
-fun HomeScreen(
+fun NewsFeedScreen(
   paddingValues: PaddingValues,
   onCommentClickListener: (FeedPost) -> Unit
 ) {

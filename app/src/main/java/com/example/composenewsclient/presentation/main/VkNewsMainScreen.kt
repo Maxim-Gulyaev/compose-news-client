@@ -1,4 +1,4 @@
-package com.example.composenewsclient.ui.theme
+package com.example.composenewsclient.presentation.main
 
 import androidx.compose.foundation.clickable
 import androidx.compose.material3.Icon
@@ -7,10 +7,8 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -18,10 +16,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.example.composenewsclient.domain.FeedPost
 import com.example.composenewsclient.navigation.AppNavGraph
-import com.example.composenewsclient.navigation.Screen
 import com.example.composenewsclient.navigation.rememberNavigationState
+import com.example.composenewsclient.presentation.comments.CommentsScreen
+import com.example.composenewsclient.presentation.news.NewsFeedScreen
 
 
 @Composable
@@ -64,7 +62,7 @@ fun MainScreen() {
         AppNavGraph(
             navHostController = navigationState.navHostController,
             newsFeedScreenContent = {
-                HomeScreen(
+                NewsFeedScreen(
                     paddingValues = paddingValues,
                     onCommentClickListener = {
                         navigationState.navigateToComments(it)

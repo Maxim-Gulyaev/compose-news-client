@@ -1,11 +1,10 @@
-package com.example.composenewsclient
+package com.example.composenewsclient.presentation.comments
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.composenewsclient.domain.FeedPost
 import com.example.composenewsclient.domain.PostComment
-import com.example.composenewsclient.ui.theme.CommentsScreenState
 
 class CommentsViewModel(
     feedPost: FeedPost
