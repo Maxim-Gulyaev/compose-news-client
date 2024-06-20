@@ -14,6 +14,7 @@ import com.example.composenewsclient.domain.StatisticItem
 import com.example.composenewsclient.presentation.main.NavigationItem
 import com.vk.api.sdk.VKPreferencesKeyValueStorage
 import com.vk.api.sdk.auth.VKAccessToken
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class NewsFeedViewModel(application: Application) : AndroidViewModel(application) {
@@ -34,6 +35,14 @@ class NewsFeedViewModel(application: Application) : AndroidViewModel(application
             val feedPosts = repository.loadRecommendations()
             _screenState.value = NewsFeedScreenState.Posts(posts = feedPosts)
         }
+    }
+
+    fun loadNextRecommendations() {
+        _screenState.value = NewsFeedScreenState.Posts(
+            posts = repository.feedPosts,
+            nextDataIsLoading = true
+        )
+        loadRecommendations()
     }
 
     fun changeLikeStatus(feedPost: FeedPost) {
