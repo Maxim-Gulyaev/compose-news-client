@@ -1,7 +1,9 @@
 package com.example.composenewsclient.data.mapper
 
+import com.example.composenewsclient.data.model.CommentsResponseDto
 import com.example.composenewsclient.data.model.NewsFeedResponseDto
 import com.example.composenewsclient.domain.FeedPost
+import com.example.composenewsclient.domain.PostComment
 import com.example.composenewsclient.domain.StatisticItem
 import com.example.composenewsclient.domain.StatisticType
 import java.text.SimpleDateFormat
@@ -40,8 +42,27 @@ class NewsFeedMapper {
         return result
     }
 
+    fun mapResponseToComments(response: CommentsResponseDto): List<PostComment> {
+        val result = mutableListOf<PostComment>()
+        val comments = response.content.comments
+        val profiles = response.content.profiles
+        for (comment in comments) {
+            if (comment.text.isBlank()) continue
+            val author = profiles.firstOrNull { it.id == comment.authorId } ?: continue
+            val postComment = PostComment(
+                id = comment.id,
+                authorName = "${author.firstName} ${author.lastName}",
+                authorAvatarUrl = author.avatarUrl,
+                commentText = comment.text,
+                publicationDate = mapTimestampToDate(comment.date)
+            )
+            result.add(postComment)
+        }
+        return result
+    }
+
     private fun mapTimestampToDate(timestamp: Long): String {
-        val date = Date(timestamp)
+        val date = Date(timestamp * 1000)
         return SimpleDateFormat("d MMMM yyyy, hh:mm", Locale.getDefault()).format(date)
     }
 

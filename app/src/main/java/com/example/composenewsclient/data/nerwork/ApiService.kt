@@ -1,5 +1,6 @@
 package com.example.composenewsclient.data.nerwork
 
+import com.example.composenewsclient.data.model.CommentsResponseDto
 import com.example.composenewsclient.data.model.LikesCountResponseDto
 import com.example.composenewsclient.data.model.NewsFeedResponseDto
 import retrofit2.http.GET
@@ -38,5 +39,12 @@ interface ApiService {
         @Query("owner_id") ownerId: Long,
         @Query("item_id") postId: Long
     )
+
+    @GET("wall.getComments?v=5.131&extended=1&fields=photo_100")
+    suspend fun getComments(
+        @Query("access_token") token: String,
+        @Query("owner_id") ownerId: Long,
+        @Query("post_id") postId: Long
+    ): CommentsResponseDto
 
 }
