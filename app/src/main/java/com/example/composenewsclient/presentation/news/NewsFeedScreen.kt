@@ -99,12 +99,6 @@ private fun FeedPosts(
                 dismissContent = {
                     PostCard(
                         feedPost = feedPost,
-                        onViewsClickListener = { statisticItem ->
-                            viewModel.updateCount(feedPost, statisticItem)
-                        },
-                        onShareClickListener = { statisticItem ->
-                            viewModel.updateCount(feedPost, statisticItem)
-                        },
                         onCommentClickListener = {
                             onCommentClickListener(feedPost)
                         },
