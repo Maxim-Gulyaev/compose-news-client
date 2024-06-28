@@ -1,4 +1,4 @@
-package com.example.composenewsclient.presentation.main
+package com.example.composenewsclient.domain
 
 sealed class AuthState {
 
