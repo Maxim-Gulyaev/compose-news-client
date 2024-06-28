@@ -1,6 +1,7 @@
 package com.example.composenewsclient.presentation.news
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -15,6 +16,7 @@ import com.example.composenewsclient.extentions.mergeWith
 import com.example.composenewsclient.presentation.main.NavigationItem
 import com.vk.api.sdk.VKPreferencesKeyValueStorage
 import com.vk.api.sdk.auth.VKAccessToken
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.collect
@@ -25,6 +27,10 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
 class NewsFeedViewModel(application: Application) : AndroidViewModel(application) {
+
+    private val exceptionHandler = CoroutineExceptionHandler { _, _ ->
+        Log.i("NewsFeedViewModel", "Exception caught by exception handler")
+    }
 
     private val repository = NewsFeedRepository(application)
 
@@ -52,13 +58,13 @@ class NewsFeedViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun changeLikeStatus(feedPost: FeedPost) {
-        viewModelScope.launch {
+        viewModelScope.launch(exceptionHandler) {
             repository.changeLikeStatus(feedPost)
         }
     }
 
     fun remove(feedPost: FeedPost) {
-        viewModelScope.launch {
+        viewModelScope.launch(exceptionHandler) {
             repository.deletePost(feedPost)
         }
     }
