@@ -1,7 +1,7 @@
 package com.example.composenewsclient.navigation
 
 import android.net.Uri
-import com.example.composenewsclient.domain.FeedPost
+import com.example.composenewsclient.domain.entity.FeedPost
 import com.google.gson.Gson
 
 sealed class Screen(

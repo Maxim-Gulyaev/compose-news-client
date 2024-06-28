@@ -2,10 +2,10 @@ package com.example.composenewsclient.data.mapper
 
 import com.example.composenewsclient.data.model.CommentsResponseDto
 import com.example.composenewsclient.data.model.NewsFeedResponseDto
-import com.example.composenewsclient.domain.FeedPost
-import com.example.composenewsclient.domain.PostComment
-import com.example.composenewsclient.domain.StatisticItem
-import com.example.composenewsclient.domain.StatisticType
+import com.example.composenewsclient.domain.entity.FeedPost
+import com.example.composenewsclient.domain.entity.PostComment
+import com.example.composenewsclient.domain.entity.StatisticItem
+import com.example.composenewsclient.domain.entity.StatisticType
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale

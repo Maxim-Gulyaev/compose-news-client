@@ -3,25 +3,17 @@ package com.example.composenewsclient.presentation.news
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.composenewsclient.data.mapper.NewsFeedMapper
-import com.example.composenewsclient.data.nerwork.ApiFactory
-import com.example.composenewsclient.data.repository.NewsFeedRepository
-import com.example.composenewsclient.domain.FeedPost
-import com.example.composenewsclient.domain.StatisticItem
+import com.example.composenewsclient.data.repository.NewsFeedRepositoryImpl
+import com.example.composenewsclient.domain.entity.FeedPost
+import com.example.composenewsclient.domain.usecases.ChangeLikeStatusUseCase
+import com.example.composenewsclient.domain.usecases.DeletePostUseCase
+import com.example.composenewsclient.domain.usecases.GetRecommendationsUseCase
+import com.example.composenewsclient.domain.usecases.LoadNextDataUseCase
 import com.example.composenewsclient.extentions.mergeWith
-import com.example.composenewsclient.presentation.main.NavigationItem
-import com.vk.api.sdk.VKPreferencesKeyValueStorage
-import com.vk.api.sdk.auth.VKAccessToken
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
@@ -29,21 +21,25 @@ import kotlinx.coroutines.launch
 class NewsFeedViewModel(application: Application) : AndroidViewModel(application) {
 
     private val exceptionHandler = CoroutineExceptionHandler { _, _ ->
-        Log.i("NewsFeedViewModel", "Exception caught by exception handler")
+        Log.d("NewsFeedViewModel", "Exception caught by exception handler")
     }
 
-    private val repository = NewsFeedRepository(application)
+    private val repository = NewsFeedRepositoryImpl(application)
 
-    private val recommendationsFlow = repository.recommendations
+    private val getRecommendationsUseCase = GetRecommendationsUseCase(repository)
+    private val loadNextDataUseCase = LoadNextDataUseCase(repository)
+    private val changeLikeStatusUseCase = ChangeLikeStatusUseCase(repository)
+    private val deletePostUseCase = DeletePostUseCase(repository)
+
+    private val recommendationsFlow = getRecommendationsUseCase()
 
     private val loadNextDataFlow = MutableSharedFlow<NewsFeedScreenState>()
 
     val screenState = recommendationsFlow
         .filter { it.isNotEmpty() }
-        .map { NewsFeedScreenState.Posts(posts = it) as NewsFeedScreenState}
+        .map { NewsFeedScreenState.Posts(posts = it) as NewsFeedScreenState }
         .onStart { emit(NewsFeedScreenState.Loading) }
         .mergeWith(loadNextDataFlow)
-
 
     fun loadNextRecommendations() {
         viewModelScope.launch {
@@ -53,20 +49,19 @@ class NewsFeedViewModel(application: Application) : AndroidViewModel(application
                     nextDataIsLoading = true
                 )
             )
-            repository.loadNextData()
+            loadNextDataUseCase()
         }
     }
 
     fun changeLikeStatus(feedPost: FeedPost) {
         viewModelScope.launch(exceptionHandler) {
-            repository.changeLikeStatus(feedPost)
+            changeLikeStatusUseCase(feedPost)
         }
     }
 
     fun remove(feedPost: FeedPost) {
         viewModelScope.launch(exceptionHandler) {
-            repository.deletePost(feedPost)
+            deletePostUseCase(feedPost)
         }
     }
-
 }

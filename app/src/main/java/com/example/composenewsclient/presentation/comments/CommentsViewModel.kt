@@ -1,27 +1,26 @@
 package com.example.composenewsclient.presentation.comments
 
 import android.app.Application
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.example.composenewsclient.data.repository.NewsFeedRepository
-import com.example.composenewsclient.domain.FeedPost
-import com.example.composenewsclient.domain.PostComment
+import com.example.composenewsclient.data.repository.NewsFeedRepositoryImpl
+import com.example.composenewsclient.domain.entity.FeedPost
+import com.example.composenewsclient.domain.usecases.GetCommentsUseCase
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
 
 class CommentsViewModel(
     feedPost: FeedPost,
     application: Application
-): ViewModel() {
+) : ViewModel() {
 
-    private val repository = NewsFeedRepository(application)
+    private val repository = NewsFeedRepositoryImpl(application)
 
-    val screenState = repository.getComments(feedPost)
-        .map { CommentsScreenState.Comments(
-            feedPost = feedPost,
-            comments = it
-        ) }
+    private val getCommentsUseCase = GetCommentsUseCase(repository)
 
+    val screenState = getCommentsUseCase(feedPost)
+        .map {
+            CommentsScreenState.Comments(
+                feedPost = feedPost,
+                comments = it
+            )
+        }
 }

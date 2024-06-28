@@ -1,11 +1,10 @@
-package com.example.composenewsclient.domain
+package com.example.composenewsclient.domain.entity
 
 import android.os.Bundle
 import android.os.Parcelable
 import androidx.navigation.NavType
 import com.google.gson.Gson
 import kotlinx.parcelize.Parcelize
-import kotlin.random.Random
 
 @Parcelize
 data class FeedPost(

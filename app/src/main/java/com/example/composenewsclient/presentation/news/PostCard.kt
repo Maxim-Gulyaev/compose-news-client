@@ -28,9 +28,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.composenewsclient.R
-import com.example.composenewsclient.domain.FeedPost
-import com.example.composenewsclient.domain.StatisticItem
-import com.example.composenewsclient.domain.StatisticType
+import com.example.composenewsclient.domain.entity.FeedPost
+import com.example.composenewsclient.domain.entity.StatisticItem
+import com.example.composenewsclient.domain.entity.StatisticType
 import com.example.composenewsclient.ui.theme.DarkRed
 
 @Composable

@@ -1,4 +1,4 @@
-package com.example.composenewsclient.domain
+package com.example.composenewsclient.domain.entity
 
 data class PostComment(
     val id: Long,

@@ -24,12 +24,11 @@ import androidx.compose.material3.rememberDismissState*/
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.composenewsclient.domain.FeedPost
+import com.example.composenewsclient.domain.entity.FeedPost
 import com.example.composenewsclient.ui.theme.DarkBlue
 
 @Composable

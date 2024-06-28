@@ -2,12 +2,10 @@ package com.example.composenewsclient.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
-import com.example.composenewsclient.domain.FeedPost
-import com.google.gson.Gson
+import com.example.composenewsclient.domain.entity.FeedPost
 import java.lang.RuntimeException
 
 fun NavGraphBuilder.homeScreenNavGraph(
