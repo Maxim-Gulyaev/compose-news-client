@@ -16,11 +16,6 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.SwipeToDismiss
 import androidx.compose.material.rememberDismissState
 import androidx.compose.material3.ExperimentalMaterial3Api
-/*import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.DismissDirection
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.SwipeToDismiss
-import androidx.compose.material3.rememberDismissState*/
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
@@ -29,14 +24,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.composenewsclient.domain.entity.FeedPost
+import com.example.composenewsclient.presentation.ViewModelFactory
 import com.example.composenewsclient.ui.theme.DarkBlue
 
 @Composable
 fun NewsFeedScreen(
-  paddingValues: PaddingValues,
-  onCommentClickListener: (FeedPost) -> Unit
+    viewModelFactory: ViewModelFactory,
+    paddingValues: PaddingValues,
+    onCommentClickListener: (FeedPost) -> Unit
 ) {
-    val viewModel: NewsFeedViewModel = viewModel()
+    val viewModel: NewsFeedViewModel = viewModel(factory = viewModelFactory)
     val screenState = viewModel.screenState.collectAsState(NewsFeedScreenState.Initial)
 
     when (val currentState = screenState.value) {
@@ -49,6 +46,7 @@ fun NewsFeedScreen(
                 nextDataIsLoading = currentState.nextDataIsLoading
             )
         }
+
         NewsFeedScreenState.Initial -> {}
         NewsFeedScreenState.Loading -> {
             Box(
@@ -61,7 +59,8 @@ fun NewsFeedScreen(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class,
+@OptIn(
+    ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class,
     ExperimentalMaterialApi::class
 )
 @Composable

@@ -18,12 +18,13 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.composenewsclient.navigation.AppNavGraph
 import com.example.composenewsclient.navigation.rememberNavigationState
+import com.example.composenewsclient.presentation.ViewModelFactory
 import com.example.composenewsclient.presentation.comments.CommentsScreen
 import com.example.composenewsclient.presentation.news.NewsFeedScreen
 
 
 @Composable
-fun MainScreen() {
+fun MainScreen(viewModelFactory: ViewModelFactory) {
 
     val navigationState = rememberNavigationState()
 
@@ -63,6 +64,7 @@ fun MainScreen() {
             navHostController = navigationState.navHostController,
             newsFeedScreenContent = {
                 NewsFeedScreen(
+                    viewModelFactory = viewModelFactory,
                     paddingValues = paddingValues,
                     onCommentClickListener = {
                         navigationState.navigateToComments(it)

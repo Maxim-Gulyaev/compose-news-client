@@ -1,15 +1,14 @@
 package com.example.composenewsclient.data.repository
 
-import android.app.Application
 import com.example.composenewsclient.data.mapper.NewsFeedMapper
-import com.example.composenewsclient.data.nerwork.ApiFactory
+import com.example.composenewsclient.data.nerwork.ApiService
+import com.example.composenewsclient.domain.entity.AuthState
 import com.example.composenewsclient.domain.entity.FeedPost
 import com.example.composenewsclient.domain.entity.PostComment
 import com.example.composenewsclient.domain.entity.StatisticItem
 import com.example.composenewsclient.domain.entity.StatisticType
-import com.example.composenewsclient.extentions.mergeWith
-import com.example.composenewsclient.domain.entity.AuthState
 import com.example.composenewsclient.domain.repository.NewsFeedRepository
+import com.example.composenewsclient.extentions.mergeWith
 import com.vk.api.sdk.VKPreferencesKeyValueStorage
 import com.vk.api.sdk.auth.VKAccessToken
 import kotlinx.coroutines.CoroutineScope
@@ -21,12 +20,13 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.retry
 import kotlinx.coroutines.flow.stateIn
+import javax.inject.Inject
 
-class NewsFeedRepositoryImpl(application: Application) : NewsFeedRepository {
-
-    private val apiService = ApiFactory.apiService
-    private val mapper = NewsFeedMapper()
-    private val storage = VKPreferencesKeyValueStorage(application)
+class NewsFeedRepositoryImpl @Inject constructor(
+    private val apiService: ApiService,
+    private val mapper: NewsFeedMapper,
+    private val storage: VKPreferencesKeyValueStorage
+) : NewsFeedRepository {
 
     private val coroutineScope = CoroutineScope(Dispatchers.Default)
 

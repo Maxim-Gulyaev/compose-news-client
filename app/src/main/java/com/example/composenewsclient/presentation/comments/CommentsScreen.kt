@@ -36,6 +36,8 @@ import coil.compose.AsyncImage
 import com.example.composenewsclient.R
 import com.example.composenewsclient.domain.entity.FeedPost
 import com.example.composenewsclient.domain.entity.PostComment
+import com.example.composenewsclient.presentation.NewsFeedApplication
+import com.example.composenewsclient.presentation.ViewModelFactory
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -44,11 +46,12 @@ fun CommentsScreen(
     feedPost: FeedPost
 ) {
 
+    val component = (LocalContext.current.applicationContext as NewsFeedApplication)
+        .component
+        .getCommentsScreenComponentFactory()
+        .create(feedPost)
     val viewModel: CommentsViewModel = viewModel(
-        factory = CommentsViewModelFactory(
-            feedPost,
-            LocalContext.current.applicationContext as Application
-        )
+        factory = component.getViewModelFactory()
     )
     val screenState =   viewModel.screenState.collectAsState(initial = CommentsScreenState.Initial)
     val currentState = screenState.value
